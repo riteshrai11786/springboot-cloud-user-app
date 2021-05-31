@@ -1,5 +1,6 @@
 package com.ritesh.techexamples.controller;
 
+import com.ritesh.techexamples.dto.ResponseTemplateDTO;
 import com.ritesh.techexamples.entity.User;
 import com.ritesh.techexamples.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ public class UserController {
 
     @GetMapping("/")
     public List<User> findAll() {
-        log.info("Inside finall of UserController");
+        log.info("Inside findall of UserController");
         return userService.findAll();
     }
 
@@ -32,6 +33,12 @@ public class UserController {
     public  User findUserById(@PathVariable("id") Long id) {
         log.info("Inside getUserWithDepartment of UserController");
         return userService.findUserById(id);
+    }
+
+    @GetMapping("/v2/{id}")
+    public ResponseTemplateDTO getUserWithDepartment(@PathVariable("id") Long userId) {
+        log.info("Inside getUserWithDepartment of UserController");
+        return userService.getUserWithDepartment(userId);
     }
 
     @GetMapping("/message")

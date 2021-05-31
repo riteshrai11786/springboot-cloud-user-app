@@ -1,5 +1,7 @@
 package com.ritesh.techexamples.service;
 
+import com.ritesh.techexamples.dto.Department;
+import com.ritesh.techexamples.dto.ResponseTemplateDTO;
 import com.ritesh.techexamples.entity.User;
 import com.ritesh.techexamples.repository.UserRepository;
 
@@ -34,6 +36,24 @@ public class UserService {
     public User findUserById(Long id) {
         log.info("Inside findUserById of UserService");
         return userRepository.findByUserId(id);
+    }
+
+    public ResponseTemplateDTO getUserWithDepartment(Long userId) {
+        log.info("Inside getUserWithDepartment of UserService");
+        ResponseTemplateDTO vo = new ResponseTemplateDTO();
+        User user = userRepository.findByUserId(userId);
+
+        /*Department department =
+                restTemplate.getForObject("http://DEPARTMENT-SERVICE/departments/" + user.getDepartmentId()
+                        ,Department.class);*/
+        Department department =
+                restTemplate.getForObject("http://localhost:9001/departments/" + user.getDepartmentId()
+                        ,Department.class);
+
+        vo.setUser(user);
+        vo.setDepartment(department);
+
+        return  vo;
     }
 
 }
